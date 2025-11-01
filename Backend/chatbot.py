@@ -40,9 +40,9 @@ def retrieve_data(query: str) -> list:
     return get_relevent_chunks(query)
 
 @tool
-def save_paper_for_qa(paper_id: str) -> str:
+async def save_paper_for_qa(paper_id: str) -> str:
     """Saves a paper to the database for detailed questioning. Input must be a paper's ArXiv ID."""
-    return prepare_paper_for_qa(paper_id)
+    return await prepare_paper_for_qa(paper_id)
 
 @tool
 def get_paper_references(paper_id: str) -> list:
@@ -76,6 +76,7 @@ def create_chat_executor(user_id: str) -> AgentExecutor:
         verbose=True,
         handle_parsing_errors=True,
         max_iterations=10,
-        memory=user_memory
+        memory=user_memory,
+        async_mode=True
     )
     return executor
